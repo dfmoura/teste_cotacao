@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>BCB Data</title>
-  </head>
-  <body>
-    <h1>BCB Data</h1>
-    {{ data|safe }}
-  </body>
+<head>
+	<title>Exchange Rate Data</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#submit").click(function() {
+				var moeda = $("#moeda").val();
+				var dataInicial = $("#dataInicial").val();
+				var dataFinalCotacao = $("#dataFinalCotacao").val();
+				var url = "/exchange_rate?moeda=" + moeda + "&dataInicial=" + dataInicial + "&dataFinalCotacao=" + dataFinalCotacao;
+				$.get(url, function(data) {
+					$("#result").html(data);
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>Exchange Rate Data</h1>
+	<form>
+		<label for="moeda">Moeda:</label>
+		<input type="text" id="moeda" name="moeda" value="EUR"><br>
+		<label for="dataInicial">Data Inicial:</label>
+		<input type="text" id="dataInicial" name="dataInicial" value="04-01-2023"><br>
+		<label for="dataFinalCotacao">Data Final:</label>
+		<input type="text" id="dataFinalCotacao" name="dataFinalCotacao" value="04-11-2023"><br>
+		<input type="button" id="submit" value="Submit"><br>
+	</form>
+	<div id="result"></div>
+</body>
 </html>
